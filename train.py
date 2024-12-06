@@ -40,7 +40,7 @@ def main(args):
         params['loss_function'] = loss_fn.__class__.__name__
         params['optimizer'] = optimizer.__class__.__name__
         mlflow.log_params(params)
-        mlflow.log_input(data.from_pandas(pd.read_csv(args.dataset), name='VidTIMIT_uv', targets='class'))
+        mlflow.log_input(data.from_pandas(df=pd.read_csv(args.dataset), source=args.dataset, name='VidTIMIT_uv', targets='class'))
         example_input = next(iter(val_dl))[0]
         signature = models.infer_signature(example_input.numpy(), model(example_input.to(device)).detach().cpu().numpy())
 
@@ -81,8 +81,8 @@ def main(args):
 
             mlflow.log_metric("train_loss", train_loss, step=epoch)
             mlflow.log_metric("val_loss", val_loss, step=epoch)
-            mlflow.log_metric("train_acc", train_acc, step=epoch)
-            mlflow.log_metric("val_acc", val_acc, step=epoch)
+            mlflow.log_metric("train_acc", 100*train_acc, step=epoch)
+            mlflow.log_metric("val_acc", 100*val_acc, step=epoch)
 
             patience_count += 1
             if patience_count == args.patience:
