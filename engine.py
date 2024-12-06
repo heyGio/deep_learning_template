@@ -8,7 +8,7 @@ def train_step(model: torch.nn.Module,
                dataloader: torch.utils.data.DataLoader, 
                loss_fn: torch.nn.Module, 
                optimizer: torch.optim.Optimizer,
-               device: torch.device) -> Tuple[float, float]:
+               device: str) -> Tuple[float, float]:
     """Trains a PyTorch model for a single epoch.
 
     Turns a target PyTorch model to training mode and then
@@ -65,10 +65,9 @@ def train_step(model: torch.nn.Module,
     return train_loss, train_acc
 
 def val_step(model: torch.nn.Module, 
-
               dataloader: torch.utils.data.DataLoader, 
               loss_fn: torch.nn.Module,
-              device: torch.device) -> Tuple[float, float]:
+              device: str) -> Tuple[float, float]:
     """Tests a PyTorch model for a single epoch.
 
     Turns a target PyTorch model to "eval" mode and then performs
